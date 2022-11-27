@@ -5,9 +5,9 @@ import {
   ReviewAdd,
   ReviewUpdate,
   Signup,
-} from "@/common/types";
-import { rest } from "msw";
-import { people, reviews } from "./repository";
+} from '@/common/types';
+import { rest } from 'msw';
+import { people, reviews } from './repository';
 
 type GetHandler = Parameters<typeof rest.get>[1];
 type PostHandler = Parameters<typeof rest.post>[1];
@@ -16,28 +16,30 @@ type DeleteHandler = Parameters<typeof rest.delete>[1];
 
 export const handlers = () => [
   // 로그인 body {name,password}
-  rest.post("/api/auth", login),
+  rest.post('/api/auth', login),
   // 회원가입 body {name,password}
-  rest.post("/api/auth/new", signUp),
+  rest.post('/api/auth/new', signUp),
   // 회원목록 조회
-  rest.get("/api/people", getPeople),
+  rest.get('/api/people', getPeople),
   // 리뷰목록 조회
-  rest.get("/api/reviews", getReviews),
+  rest.get('/api/reviews', getReviews),
   // 리뷰 조회 ?id={reviewId}
-  rest.get("/api/review", getReview),
+  rest.get('/api/review', getReview),
   // 리뷰 생성 body ReviewAdd
-  rest.post("/api/review", createReview),
+  rest.post('/api/review', createReview),
   // 리뷰 수정 body ReviewUpdate
-  rest.put("/api/review", updateReview),
+  rest.put('/api/review', updateReview),
   // 리뷰 삭제
   // query : ?id={reviewId}
-  rest.delete("/api/review", deleteReview),
+  rest.delete('/api/review', deleteReview),
 ];
+
+const hasFalsy = (values: any[]) => !values.every(({ value }) => !!value);
 
 const login: PostHandler = async (req, res, ctx) => {
   const { name, password }: Login = await req.json();
 
-  if (!name || !password) {
+  if (hasFalsy([name, password])) {
     return res(ctx.status(400));
   }
 
@@ -70,7 +72,7 @@ const login: PostHandler = async (req, res, ctx) => {
 const signUp: PostHandler = async (req, res, ctx) => {
   const { name, password }: Signup = await req.json();
 
-  if (!name || !password) {
+  if (hasFalsy([name, password])) {
     return res(ctx.status(400));
   }
 
@@ -114,12 +116,14 @@ const createReview: PostHandler = async (req, res, ctx) => {
   const { name, creator, reviewees, question }: ReviewAdd = await req.json();
 
   if (
-    !name ||
-    !creator ||
-    !reviewees ||
-    !question ||
-    !question.title ||
-    !question.description
+    hasFalsy([
+      name,
+      creator,
+      reviewees,
+      question,
+      question.title,
+      question.description,
+    ])
   ) {
     return res(ctx.status(401));
   }
@@ -133,12 +137,14 @@ const updateReview: PutHandler = async (req, res, ctx) => {
   const { id, name, reviewees, question }: ReviewUpdate = await req.json();
 
   if (
-    !id ||
-    !name ||
-    !reviewees ||
-    !question ||
-    !question.title ||
-    !question.description
+    hasFalsy([
+      id,
+      name,
+      reviewees,
+      question,
+      question.title,
+      question.description,
+    ])
   ) {
     return res(ctx.status(401));
   }
@@ -153,7 +159,7 @@ const updateReview: PutHandler = async (req, res, ctx) => {
 };
 
 const deleteReview: DeleteHandler = (req, res, ctx) => {
-  const id = req.url.searchParams.get("id");
+  const id = req.url.searchParams.get('id');
 
   if (!id) {
     return res(ctx.status(400));
@@ -165,7 +171,7 @@ const deleteReview: DeleteHandler = (req, res, ctx) => {
 };
 
 const getReview: GetHandler = (req, res, ctx) => {
-  const id = req.url.searchParams.get("id");
+  const id = req.url.searchParams.get('id');
 
   if (!id) {
     return res(ctx.status(400));
