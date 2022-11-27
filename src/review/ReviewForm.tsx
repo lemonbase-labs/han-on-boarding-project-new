@@ -1,9 +1,9 @@
-import { usePeople } from "@/common/api/usePeople";
-import { useIsFormFulfilled } from "@/common/hooks/useIsFormFulfilled";
-import { Review, ReviewFormValues } from "@/common/types";
-import { bind } from "@/common/utils/bind";
-import { Button, Form, Input, Select } from "antd";
-import { useEffect } from "react";
+import { usePeople } from '@/common/api/usePeople';
+import { useIsFormFulfilled } from '@/common/hooks/useIsFormFulfilled';
+import { Review, ReviewFormValues } from '@/common/types';
+import { bind } from '@/common/utils/bind';
+import { Button, Form, Input, Select } from 'antd';
+import { useEffect } from 'react';
 
 const { Option } = Select;
 
@@ -20,12 +20,7 @@ const useReviewForm = ({ onSubmit, originalReview }: Props) => {
 
   useEffect(() => {
     if (originalReview) {
-      form.setFieldsValue({
-        name: originalReview.name,
-        reviewees: originalReview.reviewees,
-        question: originalReview.question.title,
-        questionDescription: originalReview.question.description,
-      });
+      form.setFieldsValue(originalReview);
     }
   }, [form, originalReview]);
   return { form, onSubmit, onFieldsChange, people, shouldSubmitActive };
@@ -49,7 +44,7 @@ export const ReviewForm = bind(
         label="대상자"
         rules={[
           {
-            type: "array",
+            type: 'array',
             required: true,
           },
         ]}
@@ -70,12 +65,16 @@ export const ReviewForm = bind(
           ))}
         </Select>
       </Form.Item>
-      <Form.Item label="질문" name="question" rules={[{ required: true }]}>
+      <Form.Item
+        label="질문"
+        name={['question', 'title']}
+        rules={[{ required: true }]}
+      >
         <Input data-test="review-question-input" />
       </Form.Item>
       <Form.Item
         label="질문설명"
-        name="questionDescription"
+        name={['question', 'description']}
         rules={[{ required: true }]}
       >
         <Input data-test="review-description-input" />

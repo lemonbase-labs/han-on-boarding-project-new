@@ -1,9 +1,9 @@
-import { useCreateReview as useCreateReviewAPI } from "@/common/api/useCreateReview";
-import { useAuth } from "@/common/hooks/useAuth";
-import { ReviewFormValues } from "@/common/types";
-import { bind } from "@/common/utils/bind";
-import { message, Typography } from "antd";
-import { ReviewForm } from "./ReviewForm";
+import { useCreateReview as useCreateReviewAPI } from '@/common/api/useCreateReview';
+import { useAuth } from '@/common/hooks/useAuth';
+import { ReviewFormValues } from '@/common/types';
+import { bind } from '@/common/utils/bind';
+import { message, Typography } from 'antd';
+import { ReviewForm } from './ReviewForm';
 
 type Props = {
   onComplete: () => void;
@@ -13,20 +13,10 @@ const useCreateReview = ({ onComplete }: Props) => {
   const { person } = useAuth();
   const create = useCreateReviewAPI();
 
-  const onSubmit = async ({
-    name,
-    question,
-    questionDescription,
-    reviewees,
-  }: ReviewFormValues) => {
+  const onSubmit = async (review: ReviewFormValues) => {
     const payload = {
-      name,
-      reviewees,
-      creator: person?.name ?? "unknown",
-      question: {
-        title: question,
-        description: questionDescription,
-      },
+      ...review,
+      creator: person?.name ?? 'unknown',
     };
 
     const { error } = await create(payload);
@@ -37,8 +27,8 @@ const useCreateReview = ({ onComplete }: Props) => {
     }
 
     message.success({
-      content: "리뷰 생성 완료",
-      className: "review-created-toast",
+      content: '리뷰 생성 완료',
+      className: 'review-created-toast',
       duration: 10,
     });
 
