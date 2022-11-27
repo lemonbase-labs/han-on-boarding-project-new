@@ -6,9 +6,9 @@ import { formatDate } from '@/common/utils/formatDate';
 import { bind } from '@/common/utils/bind';
 import { useDeleteReview } from '@/common/api/useDeleteReview';
 
-type Props = {
+interface Props {
   onSelectReview: (id: string) => void;
-};
+}
 
 type Columns = { key: ReviewListItem['id'] } & Omit<ReviewListItem, 'id'>;
 

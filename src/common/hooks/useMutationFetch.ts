@@ -1,9 +1,7 @@
-import { AxiosError, AxiosRequestConfig, Method } from "axios";
-import { axiosInstance } from "../utils/axios";
+import { AxiosError, AxiosRequestConfig, Method } from 'axios';
+import { axiosInstance } from '../utils/axios';
 
-type Props = AxiosRequestConfig;
-
-export const useMutationFetch = async <T>(config: Props) => {
+export const useMutationFetch = async <T>(config: AxiosRequestConfig) => {
   try {
     const { data } = await axiosInstance.request<T>(config);
 

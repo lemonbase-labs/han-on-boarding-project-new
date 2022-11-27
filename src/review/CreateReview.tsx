@@ -5,9 +5,9 @@ import { bind } from '@/common/utils/bind';
 import { message, Typography } from 'antd';
 import { ReviewForm } from './ReviewForm';
 
-type Props = {
+interface Props {
   onComplete: () => void;
-};
+}
 
 const useCreateReview = ({ onComplete }: Props) => {
   const { person } = useAuth();

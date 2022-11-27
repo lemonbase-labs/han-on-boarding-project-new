@@ -1,20 +1,20 @@
-import { Button, Form, Input, message } from "antd";
-import { useState } from "react";
-import type { FormProps } from "antd";
-import { useHistory } from "react-router-dom";
-import { PersonAdd, PersonDisplay } from "@/common/types";
-import { useAuth } from "@/common/hooks/useAuth";
-import { bind } from "@/common/utils/bind";
-import { useIsFormFulfilled } from "@/common/hooks/useIsFormFulfilled";
+import { Button, Form, Input, message } from 'antd';
+import { useState } from 'react';
+import type { FormProps } from 'antd';
+import { useHistory } from 'react-router-dom';
+import { PersonAdd, PersonDisplay } from '@/common/types';
+import { useAuth } from '@/common/hooks/useAuth';
+import { bind } from '@/common/utils/bind';
+import { useIsFormFulfilled } from '@/common/hooks/useIsFormFulfilled';
 
-type Props = {
+interface Props {
   formName: string;
   authRequest: (
     arg: PersonAdd
   ) => Promise<
     { data: PersonDisplay; error: boolean } | { data: undefined; error: string }
   >;
-};
+}
 
 const useAuthForm = ({ formName, authRequest }: Props) => {
   const { login } = useAuth();
@@ -26,12 +26,12 @@ const useAuthForm = ({ formName, authRequest }: Props) => {
     const { data, error } = await authRequest(values);
 
     if (error) {
-      message.error({ content: error, className: "auth-error-message" });
+      message.error({ content: error, className: 'auth-error-message' });
       return;
     }
 
     login(data!);
-    push("/review");
+    push('/review');
   };
 
   return { onFieldsChange, formName, onFinish, shouldSubmitActive };

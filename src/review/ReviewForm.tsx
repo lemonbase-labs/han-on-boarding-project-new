@@ -7,10 +7,10 @@ import { useEffect } from 'react';
 
 const { Option } = Select;
 
-type Props = {
+interface Props {
   onSubmit: (arg: ReviewFormValues) => void;
   originalReview?: Review;
-};
+}
 
 const useReviewForm = ({ onSubmit, originalReview }: Props) => {
   const [form] = Form.useForm();

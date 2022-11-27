@@ -1,14 +1,14 @@
-import { useReview } from "@/common/api/useReview";
-import { useUpdateReview as useUpdateReviewAPI } from "@/common/api/useUpdateReview";
-import { ID, ReviewFormValues } from "@/common/types";
-import { bind } from "@/common/utils/bind";
-import { message, Typography } from "antd";
-import { ReviewForm } from "./ReviewForm";
+import { useReview } from '@/common/api/useReview';
+import { useUpdateReview as useUpdateReviewAPI } from '@/common/api/useUpdateReview';
+import { ID, ReviewFormValues } from '@/common/types';
+import { bind } from '@/common/utils/bind';
+import { message, Typography } from 'antd';
+import { ReviewForm } from './ReviewForm';
 
-type Props = {
+interface Props {
   id: ID;
   onComplete: () => void;
-};
+}
 
 const useUpdateReview = ({ id, onComplete }: Props) => {
   const { data: review } = useReview(id);
@@ -37,8 +37,8 @@ const useUpdateReview = ({ id, onComplete }: Props) => {
     }
 
     message.success({
-      content: "리뷰 수정 완료",
-      className: "review-updated-toast",
+      content: '리뷰 수정 완료',
+      className: 'review-updated-toast',
       duration: 10,
     });
     onComplete();
