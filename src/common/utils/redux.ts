@@ -1,10 +1,10 @@
-import { configureStore, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PersonDisplay } from "../types";
+import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PersonDisplay } from '../types';
 import {
   TypedUseSelectorHook,
   useDispatch as _useDispatch,
   useSelector as _useSelector,
-} from "react-redux";
+} from 'react-redux';
 
 type AppDispatch = typeof store.dispatch;
 
@@ -21,14 +21,14 @@ type AuthState = {
 const initialState: AuthState = { person: undefined };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     login: (state, { payload }: PayloadAction<PersonDisplay>) => {
-      return (state = { person: payload });
+      state = { person: payload };
     },
     logout: (state) => {
-      return (state = { person: undefined });
+      state = { person: undefined };
     },
   },
 });

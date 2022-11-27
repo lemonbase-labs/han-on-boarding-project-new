@@ -1,45 +1,43 @@
 export type ID = string;
 
-export type Person = {
+export interface Person {
   id: ID;
   password: string;
   name: string;
   createdAt: string;
-};
+}
 
-export type Question = {
+export interface Question {
   title: string;
   description: string;
-};
+}
 
-export type Review = {
+export interface Review {
   id: ID;
   name: string;
   creator: ID;
   reviewees: ID[];
   question: Question;
   createdAt: string;
-};
+}
 
-type AddModel<T> = Omit<T, "id" | "createdAt">;
+type AddModel<T> = Omit<T, 'id' | 'createdAt'>;
 
-export type PersonAdd = AddModel<Person>;
+export type ReviewListItem = Omit<Review, 'reviewees' | 'question'>;
 
-export type ReviewListItem = Omit<Review, "reviewees" | "question">;
+export type PersonDisplay = Omit<Person, 'password' | 'createdAt'>;
 
-export type PersonDisplay = Omit<Person, "password" | "createdAt">;
+export type Login = AddModel<Person>;
 
-export type Login = PersonAdd;
-
-export type Signup = Login;
+export type Signup = AddModel<Person>;
 
 export type ReviewAdd = AddModel<Review>;
 
-export type ReviewUpdate = Omit<Review, "creator" | "createdAt">;
+export type ReviewUpdate = Omit<Review, 'creator' | 'createdAt'>;
 
 export type ReviewFormValues = {
-  name: Review["name"];
-  reviewees: Review["reviewees"];
-  question: Question["title"];
-  questionDescription: Question["description"];
+  name: Review['name'];
+  reviewees: Review['reviewees'];
+  question: Question['title'];
+  questionDescription: Question['description'];
 };

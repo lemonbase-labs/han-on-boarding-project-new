@@ -1,6 +1,6 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
-import { axiosInstance } from "../utils/axios";
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { useEffect, useState } from 'react';
+import { axiosInstance } from '../utils/axios';
 
 export const useGetFetch = <T>(url: string) => {
   const [data, setData] = useState<T>();
@@ -24,6 +24,7 @@ export const useGetFetch = <T>(url: string) => {
   const execute = async () => {
     try {
       setIsLoading(true);
+      setError(undefined);
       const { data: responseData } = await axiosInstance.get<T>(url);
       setData(responseData);
     } catch (error) {
